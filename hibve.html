@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .balance {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        input, button {
+            padding: 10px;
+            font-size: 1em;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #history {
+            text-align: left;
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+            margin-top: 20px;
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Roblox</h1>
+        <div class="balance">Current Robux: <span id="robux">0</span> | Current Tbucks: <span id="tbucks">0</span></div>
+        
+        <!-- Robux Generation -->
+        <input type="number" id="robuxAmount" placeholder="Enter amount of Robux" min="1" />
+        <button onclick="executeGenerateCommand()">Generate Robux</button>
+        
+        <!-- Tbucks Generation -->
+        <input type="number" id="tbucksAmount" placeholder="Enter amount of Tbucks" min="1" />
+        <button onclick="executeHouseGeneratorCommand()">Generate Tbucks</button>
+        
+        <!-- Account Hacking -->
+        <input type="text" id="robloxUsername" placeholder="Enter Roblox username" />
+        <button onclick="executeHackCommand()">Hack Roblox Account</button>
+        
+        <!-- Password Cracking -->
+        <input type="text" id="password" placeholder="Enter password to crack" />
+        <button onclick="executeCrackPasswordCommand()">Crack Password</button>
+        
+        <!-- Making Game Free -->
+        <input type="text" id="gameName" placeholder="Enter game name" />
+        <select id="platform">
+            <option value="roblox">Roblox</option>
+            <option value="steam">Steam</option>
+        </select>
+        <button onclick="executeMakeGameFreeCommand()">Make Game Free</button>
+        
+        <!-- Command Executor -->
+        <input type="text" id="ddosIp" placeholder="Enter IP for DDoS attack" />
+        <button onclick="executeDdosCommand()">Execute DDoS Attack</button>
+        
+        <!-- Buttons for Display and History -->
+        <button onclick="displayBalance()">Show Balance</button>
+        <button onclick="showLogs()">Show Logs</button>
+        <button onclick="clearHistory()">Clear History</button>
+        
+        <!-- History Display -->
+        <div id="history"></div>
+    </div>
+
+    <script>
+        // Initial balance and history
+        let robux = 0;
+        let tbucks = 0;
+        let history = [];
+        
+        // Function to execute the generate Robux command
+        function executeGenerateCommand() {
+            const amountInput = document.getElementById('robuxAmount');
+            const amount = parseInt(amountInput.value, 10);
+            
+            if (isNaN(amount) || amount <= 0) {
+                logToHistory('Invalid amount entered for Robux. Please enter a positive number.');
+                return;
+            }
+            
+            const command = `roblox{generate/robux:${amount}}`;
+            logToHistory(`Executing command: ${command}`);
+            
+            robux += amount;
+            history.push({ command: command, amount: amount, time: new Date() });
+            
+            // Update the displayed balance
+            document.getElementById('robux').textContent = robux;
+            
+            // Log the result
+            logToHistory(`Generated ${amount} Robux. Current balance: ${robux} Robux`);
+            
+            // Clear the input field
+            amountInput.value = '';
+        }
+
+        // Function to execute the house generator command
+        function executeHouseGeneratorCommand() {
+            const amountInput = document.getElementById('tbucksAmount');
+            const amount = parseInt(amountInput.value, 10);
+            
+            if (isNaN(amount) || amount <= 0) {
+                logToHistory('Invalid amount entered for Tbucks. Please enter a positive number.');
+                return;
+            }
+            
+            const command = `roblox:housegenerator/tbucksgenerate:${amount}/houseprint/robloxhackaccount:`;
+            logToHistory(`Executing command: ${command}`);
+            
+            tbucks += amount;
+            history.push({ command: command, amount: amount, time: new Date() });
+            
+            // Log the result
+            logToHistory(`Generated ${amount} Tbucks. Current Tbucks: ${tbucks}`);
+            
+            // Clear the input field
+            amountInput.value = '';
+        }
+
+        // Function to execute the hack command
+        function executeHackCommand() {
+            const usernameInput = document.getElementById('robloxUsername');
+            const username = usernameInput.value.trim();
+            
+            if (username === '') {
+                logToHistory('No username entered. Please enter a Roblox username.');
+                return;
+            }
+            
+            const command = `roblox:housegenerator/tbucksgenerate:/houseprint/robloxhackaccount:${username}`;
+            logToHistory(`Executing command: ${command}`);
+            
+            history.push({ command: command, time: new Date() });
+            
+            // Log the result
+            logToHistory(`Attempted to hack Roblox account: ${username}`);
+            
+            // Clear the input field
+            usernameInput.value = '';
+        }
+
+        // Function to execute the crack password command
+        function executeCrackPasswordCommand() {
+            const passwordInput = document.getElementById('password');
+            const password = passwordInput.value.trim();
+            
+            if (password === '') {
+                logToHistory('No password entered. Please enter a password to crack.');
+                return;
+            }
+            
+            const command = `roblox:passwordcracker:${password}`;
+            logToHistory(`Executing command: ${command}`);
+            
+            history.push({ command: command, time: new Date() });
+            
+            // Log the result
+            logToHistory(`Attempted to crack password: ${password}`);
+            
+            // Clear the input field
+            passwordInput.value = '';
+        }
+
+        // Function to execute the make game free command
+        function executeMakeGameFreeCommand() {
+            const gameInput = document.getElementById('gameName');
+            const gameName = gameInput.value.trim();
+            const platform = document.getElementById('platform').value;
+            
+            if (gameName === '') {
+                logToHistory('No game name entered. Please enter a game name.');
+                return;
+            }
+            
+            const command = `roblox:${platform}makegamefree:${gameName}`;
+            logToHistory(`Executing command: ${command}`);
+            
+            history.push({ command: command, time: new Date() });
+            
+            // Log the result
+            logToHistory(`Attempted to make game free: ${gameName} on ${platform}`);
+            
+            // Clear the input field
+            gameInput.value = '';
+        }
+
+        // Function to execute the DDoS attack command
+        function executeDdosCommand() {
+            const ipInput = document.getElementById('ddosIp');
+            const ip = ipInput.value.trim();
+            
+            if (ip === '') {
+                logToHistory('No IP entered. Please enter an IP address for the DDoS attack.');
+                return;
+            }
+            
+            const command = `ddos:attack:ip:${ip}`;
+            logToHistory(`Executing command: ${command}`);
+            
+            history.push({ command: command, time: new Date() });
+            
+            // Log the result
+            logToHistory(`Attempted DDoS attack on IP: ${ip}`);
+            
+            // Clear the input field
+            ipInput.value = '';
+        }
+
+        // Function to display the current balance
+        function displayBalance() {
+            logToHistory(`Current Robux: ${robux} Robux | Current Tbucks: ${tbucks}`);
+        }
+
+        // Function to show logs in command prompt style
+        function showLogs() {
+            const historyDiv = document.getElementById('history');
+            historyDiv.textContent = history.map(entry => `> ${entry.command || 'No command'} at ${entry.time.toLocaleTimeString()} - ${entry.amount || ''}`).join('\n');
+        }
+
+        // Function to clear history
+        function clearHistory() {
+            history = [];
+            document.getElementById('history').textContent = '';
+        }
+
+        // Helper function to log messages to the history
+        function logToHistory(message) {
+            const historyDiv = document.getElementById('history');
+            historyDiv.textContent += `\n> ${message}`;
+            historyDiv.scrollTop = historyDiv.scrollHeight; // Scroll to bottom
+        }
+    </script>
+</body>
+</html>
